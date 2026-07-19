@@ -16,7 +16,7 @@
 
 | Service | URL |
 |---|---|
-| Frontend | https://smart-campus.netlify.app |
+| Frontend | https://smartcampustu.netlify.app/ |
 | Backend API | https://smart-campus-backend.onrender.com |
 | API Health | https://smart-campus-backend.onrender.com/api/health |
 
