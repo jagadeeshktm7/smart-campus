@@ -115,6 +115,6 @@ app.use((err, req, res, next) => {
 
 // ── Start ────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n🚀 Smart Campus Server running on port ${PORT}`);
-  console.log(`   Health: http://localhost:${PORT}/api/health\n`);
+  console.log(`🚀 Smart Campus Server running on port ${PORT}`);
+  console.log("Health endpoint: /api/health");
 });
