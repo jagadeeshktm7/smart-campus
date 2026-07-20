@@ -24,8 +24,15 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 // ── Middleware ───────────────────────────────────────────────
-app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+app.use(cors({
+  origin: "*",
+  credentials: false,
+  methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"],
+}));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -114,7 +121,8 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start ────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`🚀 Smart Campus Server running on port ${PORT}`);
-  console.log("Health endpoint: /api/health");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`\n🚀 Smart Campus Server running on port ${PORT}`);
+  console.log(`   Health: http://localhost:${PORT}/api/health\n`);
 });

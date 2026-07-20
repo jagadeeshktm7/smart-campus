@@ -2,6 +2,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
+// ── Base URL — points to Render backend ──────────────────────
+const API = "https://smart-campus-w54h.onrender.com";
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -9,18 +12,30 @@ export const AuthProvider = ({ children }) => {
   const [token,   setToken]   = useState(localStorage.getItem("sc_token"));
   const [loading, setLoading] = useState(true);
 
-  // Set axios default auth header
+  // Set axios default base URL and auth header
   useEffect(() => {
-    if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    else        delete axios.defaults.headers.common["Authorization"];
+    axios.defaults.baseURL = API;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
   }, [token]);
+
+  // Set base URL on first load too
+  useEffect(() => {
+    axios.defaults.baseURL = API;
+  }, []);
 
   // Load user on mount
   useEffect(() => {
     if (!token) { setLoading(false); return; }
     axios.get("/api/auth/me")
       .then(r => setUser(r.data.user))
-      .catch(() => { localStorage.removeItem("sc_token"); setToken(null); })
+      .catch(() => {
+        localStorage.removeItem("sc_token");
+        setToken(null);
+      })
       .finally(() => setLoading(false));
   }, [token]);
 

@@ -157,7 +157,7 @@ cp .env.example .env
 npm install
 npm run dev
 ```
-Backend runs at: `http://localhost:5000`
+Backend runs at: `https://smart-campus-w54h.onrender.com/`
 Test: `http://localhost:5000/api/health`
 
 ### Step 4 — Set up Frontend
@@ -172,17 +172,17 @@ Frontend runs at: `http://localhost:3000`
 ### Step 5 — Create test users
 ```bash
 # Create Admin
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://smart-campus-w54h.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Admin","email":"admin@college.edu","password":"admin123","role":"admin","dept_id":1}'
 
 # Create Faculty
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://smart-campus-w54h.onrender.com//api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Dr R Kumar","email":"kumar@college.edu","password":"faculty123","role":"faculty","dept_id":1,"employee_id":"EMP001","designation":"Professor"}'
 
 # Create Student
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://smart-campus-w54h.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Arjun Nair","email":"arjun@college.edu","password":"student123","role":"student","dept_id":1,"roll_number":"21CS045","semester":6,"batch_year":2021}'
 ```
