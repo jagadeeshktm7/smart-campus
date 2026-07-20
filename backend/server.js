@@ -28,12 +28,21 @@ app.use(helmet({
   crossOriginResourcePolicy: false,
 }));
 app.use(cors({
-  origin: "*",
-  credentials: false,
+  origin: function(origin, callback) {
+    const allowed = [
+      "https://smartcampustu.netlify.app",
+      "http://localhost:3000",
+    ];
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
   methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
-}));
-app.use(morgan("dev"));
+}));use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

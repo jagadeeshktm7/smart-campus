@@ -1,9 +1,9 @@
-// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// ── Base URL — points to Render backend ──────────────────────
-const API = "https://smart-campus-w54h.onrender.com";
+const API_URL = "https://smart-campus-w54h.onrender.com";
+
+axios.defaults.baseURL = API_URL;
 
 const AuthContext = createContext(null);
 
@@ -12,9 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [token,   setToken]   = useState(localStorage.getItem("sc_token"));
   const [loading, setLoading] = useState(true);
 
-  // Set axios default base URL and auth header
   useEffect(() => {
-    axios.defaults.baseURL = API;
+    axios.defaults.baseURL = API_URL;
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
@@ -22,15 +21,9 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // Set base URL on first load too
-  useEffect(() => {
-    axios.defaults.baseURL = API;
-  }, []);
-
-  // Load user on mount
   useEffect(() => {
     if (!token) { setLoading(false); return; }
-    axios.get("/api/auth/me")
+    axios.get(`${API_URL}/api/auth/me`)
       .then(r => setUser(r.data.user))
       .catch(() => {
         localStorage.removeItem("sc_token");
@@ -40,7 +33,10 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const { data } = await axios.post("/api/auth/login", { email, password });
+    const { data } = await axios.post(
+      `${API_URL}/api/auth/login`,
+      { email, password }
+    );
     localStorage.setItem("sc_token", data.token);
     setToken(data.token);
     setUser(data.user);
