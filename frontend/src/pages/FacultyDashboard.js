@@ -54,7 +54,7 @@ export default function FacultyDashboard() {
   const loadRooms = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/admin/rooms");
+        "https://smart-campus-w54h.onrender.com/api/admin/rooms");
       setRooms(data.rooms || []);
     } catch (_) {}
   };
@@ -62,7 +62,7 @@ export default function FacultyDashboard() {
   const loadSchedule = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/faculty/today-schedule");
+        "https://smart-campus-w54h.onrender.com/api/faculty/today-schedule");
       setSchedule(data.schedule || []);
     } catch (_) {}
   };
@@ -70,7 +70,7 @@ export default function FacultyDashboard() {
   const loadPending = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/nodues/faculty/pending");
+        "https://smart-campus-w54h.onrender.com/api/nodues/faculty/pending");
       setPending(data.requests || []);
     } catch (_) {}
   };
@@ -79,7 +79,7 @@ export default function FacultyDashboard() {
     setLoadStudents(true);
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/admin/users");
+        "https://smart-campus-w54h.onrender.com/api/admin/users");
       const studs = (data.users || []).filter(u => u.role === "student");
       setStudents(studs);
     } catch (_) {}
@@ -88,7 +88,7 @@ export default function FacultyDashboard() {
 
   const updateStatus = async () => {
     try {
-      await axios.put("http://localhost:5000/api/faculty/status", {
+      await axios.put("https://smart-campus-w54h.onrender.com/api/faculty/status", {
         status: curStatus,
         room_id: selectedRoom || null,
         available_until: availUntil || null,
@@ -104,7 +104,7 @@ export default function FacultyDashboard() {
     if (!qrInput.trim()) return toast.error("Enter QR code value");
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/faculty/qr-checkin", {
+        "https://smart-campus-w54h.onrender.com/api/faculty/qr-checkin", {
         qr_code_hash: qrInput.trim(),
         device_id:    navigator.userAgent,
       });
@@ -120,7 +120,7 @@ export default function FacultyDashboard() {
     if (!pin.trim()) return toast.error("Enter your PIN");
     try {
       await axios.post(
-        `http://localhost:5000/api/nodues/approve/${req_id}`, {
+        `https://smart-campus-w54h.onrender.com/api/nodues/approve/${req_id}`, {
         pin, action,
         remarks: action === "reject" ? "Incomplete submissions" : "",
       });
@@ -136,7 +136,7 @@ export default function FacultyDashboard() {
   const updateItems = async (req_id, field, value) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/nodues/update-items/${req_id}`,
+        `https://smart-campus-w54h.onrender.com/api/nodues/update-items/${req_id}`,
         { [field]: value });
       toast.success("Updated");
       loadPending();
@@ -151,7 +151,7 @@ export default function FacultyDashboard() {
     }
     setAddingStudent(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post("https://smart-campus-w54h.onrender.com/api/auth/register", {
         name:        stuForm.name,
         email:       stuForm.email,
         password:    stuForm.password || "student123",

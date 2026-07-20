@@ -119,7 +119,7 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/stats");
+      const { data } = await axios.get("https://smart-campus-w54h.onrender.com//api/admin/stats");
       setStats(data.stats || {});
     } catch (_) {}
   };
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
   const fetchUsers = useCallback(async () => {
     setLoadUsers(true);
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/users");
+      const { data } = await axios.get("https://smart-campus-w54h.onrender.com//api/admin/users");
       setUsers(data.users || []);
     } catch (_) {}
     finally { setLoadUsers(false); }
@@ -135,14 +135,14 @@ export default function AdminDashboard() {
 
   const fetchRooms = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/rooms");
+      const { data } = await axios.get("https://smart-campus-w54h.onrender.com/api/admin/rooms");
       setRooms(data.rooms || []);
     } catch (_) {}
   };
 
   const fetchSubjects = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/timetable");
+      const { data } = await axios.get("https://smart-campus-w54h.onrender.com/api/timetable");
       const seen = new Set();
       const subs = (data.timetable || []).filter(t => {
         if (seen.has(t.subject_code)) return false;
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
     }
     setAdding(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post("https://smart-campus-w54h.onrender.com/api/auth/register", {
         name:     form.name,
         email:    form.email,
         password: form.password,
@@ -195,7 +195,7 @@ export default function AdminDashboard() {
   const toggleUser = async (userId, isActive) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/admin/users/${userId}/toggle`, {});
+        `https://smart-campus-w54h.onrender.com/api/admin/users/${userId}/toggle`, {});
       toast.success(isActive ? "User deactivated" : "User activated");
       fetchUsers();
       fetchStats();
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
     }
     setAddingRoom(true);
     try {
-      await axios.post("http://localhost:5000/api/admin/rooms", {
+      await axios.post("https://smart-campus-w54h.onrender.com/api/admin/rooms", {
         room_number: roomForm.room_number,
         floor:       parseInt(roomForm.floor),
         building:    roomForm.building || "Main Block",
@@ -229,7 +229,7 @@ export default function AdminDashboard() {
     }
     setAddingSub(true);
     try {
-      await axios.post("http://localhost:5000/api/admin/subjects", {
+      await axios.post("https://smart-campus-w54h.onrender.com/api/admin/subjects", {
         subject_code: subForm.subject_code,
         subject_name: subForm.subject_name,
         dept_id:      parseInt(subForm.dept_id),
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
     }
     setAddingTt(true);
     try {
-      await axios.post("http://localhost:5000/api/timetable", {
+      await axios.post("https://smart-campus-w54h.onrender.com/api/timetable", {
         faculty_id:    parseInt(ttForm.faculty_id),
         subject_id:    parseInt(ttForm.subject_id),
         room_id:       parseInt(ttForm.room_id),
